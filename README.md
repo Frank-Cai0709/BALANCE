@@ -1,6 +1,5 @@
 # DGMHA-ProtoNet
 
-Official Code for  
 **"Towards Interpretable and Accurate Breast Cancer Classification via Dual-Granularity Attention and Optimized Prototype Learning"**
 
 ---
@@ -23,17 +22,7 @@ Extensive experiments on the **BreaKHis** dataset demonstrate that our method ac
 
 ## 🖼️ Framework Overview
 
-<img src="assets/framework_diagram.png" alt="Framework Overview" width="700"/>
-
-> 📝 *To reproduce this image: convert the PDF to PNG (e.g., via PowerPoint or an online converter), then place it under the `assets/` folder.*
-
----
-
-## 🚀 Features
-
-- ✅ Dual-scale attention for global and local dependency modeling  
-- ✅ Optimized prototype interpretability via dual latent embedding  
-- ✅ High performance and interpretability on histopathology images (BreaKHis)  
+<img src="framework.png" alt="Framework Overview" width="700"/>
 
 ---
 
@@ -46,5 +35,3 @@ cd DGMHA-ProtoNet
 # Create virtual environment
 conda create -n dgmha_env python=3.10
 conda activate dgmha_env
-
-
