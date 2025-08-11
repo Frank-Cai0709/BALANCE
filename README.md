@@ -1,4 +1,4 @@
-# DGMHA-ProtoNet
+# DGMHA-OPF
 
 **"Towards Interpretable and Accurate Breast Cancer Classification via Dual-Granularity Attention and Optimized Prototype Learning"**
 
@@ -8,7 +8,7 @@
 
 Breast cancer remains the most prevalent malignancy among women globally, underscoring the critical importance of early detection and accurate classification. However, existing deep learning-based computer-aided diagnosis (CAD) systems often struggle to strike a balance between high classification accuracy and interpretability.
 
-To address this trade-off, we propose **DGMHA-ProtoNet**, a novel framework that synergistically combines attention-enhanced feature representation with prototype-based interpretability.
+To address this trade-off, we propose **DGMHA-OPF**, a novel framework that synergistically combines attention-enhanced feature representation with prototype-based interpretability.
 
 - We design a **Dual-Granularity Multi-Head Attention (DGMHA)** module to capture both coarse- and fine-grained long-range dependencies, thereby enriching feature expressiveness.
 - For enhanced interpretability, we introduce a **Dual Latent Space Prototype Projection** mechanism that jointly leverages:
