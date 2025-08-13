@@ -1,6 +1,6 @@
 # DGMHA-OPF
 
-**"Towards Interpretable and Accurate Breast Cancer Classification via Dual-Granularity Attention and Optimized Prototype Learning"**
+**"Interpretable Breast Cancer Classification via Dual-Granularity Attention with Latent Prototype Alignment"**
 
 ---
 
