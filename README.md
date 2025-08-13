@@ -1,4 +1,4 @@
-# DGMHA-OPF
+# BALANCE
 
 **"Interpretable Breast Cancer Classification via Dual-Granularity Attention with Latent Prototype Alignment"**
 
@@ -20,8 +20,8 @@ In response, we present a novel framework that jointly enhances discriminative c
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/Frank-Cai0709/DGMHA-OPF.git
-cd DGMHA-OPF
+git clone https://github.com/Frank-Cai0709/BALANCE.git
+cd BALANCE
 
 # Create virtual environment
 conda create -n ours_env python=3.10
