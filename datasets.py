@@ -33,10 +33,24 @@ def split_dataset(benign_dir, malignant_dir):
         filepaths.extend(files)
         labels.extend([label] * len(files))
     df = pd.DataFrame({'filepaths': filepaths, 'labels': labels})
-    train_df, test_df = train_test_split(df, test_size=0.3, stratify=df['labels'])
+    train_df, temp_df = train_test_split(
+        df,
+        test_size=0.30,
+        stratify=df['labels'],
+        random_state=42
+    )
+
+    val_df, test_df = train_test_split(
+        temp_df,
+        test_size=0.50, 
+        stratify=temp_df['labels'],
+        random_state=42
+    )
+
 
     print("Train dataset:", train_df.shape[0])
     print("Test dataset:", test_df.shape[0])
+    print("Val dataset:", val_df.shape[0])
 
     train_transform = transforms.Compose([
         transforms.Resize((299, 299)),
@@ -52,10 +66,17 @@ def split_dataset(benign_dir, malignant_dir):
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
+    val_transform = transforms.Compose([
+        transforms.Resize((299, 299)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
     
     train_dataset = Dataset(train_df, transform=train_transform)
     test_dataset = Dataset(test_df, transform=test_transform)
+    val_dataset = Dataset(val_df, transform=val_transform)
     
     train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, num_workers=2)
     test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers=2)
-    return train_loader, test_loader
+    val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False, num_workers=2)
+    return train_loader, test_loader, val_loader
