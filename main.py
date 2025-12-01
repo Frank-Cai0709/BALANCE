@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     model_path = f'./checkpoints/{args.dataset}.pth'
 
-    train_loader,test_loader = split_dataset(benign_dir, malignant_dir)
+    train_loader,test_loader,val_loader = split_dataset(benign_dir, malignant_dir)
 
     model = PrototypeNet(num_classes=cfg.dataset.num_classes, num_prototypes_per_class=10).to(device)
 
@@ -51,6 +51,6 @@ if __name__ == "__main__":
                 )
             exit()
     
-    train_model(model, cfg, train_loader,  model_path, device)
+    train_model(model, cfg, train_loader, val_loader, model_path, device)
     test_model(model, cfg, test_loader, model_path, device)
 
