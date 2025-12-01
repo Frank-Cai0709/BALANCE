@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.metrics import roc_auc_score, precision_score, recall_score, f1_score
-from models.Prototype import prototype_loss, project_prototypes
+from Prototype import prototype_loss, project_prototypes
 import pickle
 
 # Training function
-def train_model(model, cfg,  train_loader,  model_path, device):
+def train_model(model, cfg,  train_loader, val_loader,  model_path, device):
     criterion = nn.CrossEntropyLoss()
     
     # Phase 1: Freeze backbone
@@ -50,6 +50,36 @@ def train_model(model, cfg,  train_loader,  model_path, device):
         
         print(f'Epoch {epoch+1}/{cfg.epochs1}, Loss: {epoch_loss:.4f}, Acc: {epoch_acc*100:.2f}%')
         scheduler.step(epoch_loss)
+
+        model.eval()
+        val_running_loss = 0.0
+        val_correct = 0
+        val_total = 0
+
+        with torch.no_grad():
+            for inputs, labels, _ in val_loader:
+                inputs, labels = inputs.to(device), labels.to(device)
+
+                outputs, probs, distances, prototype_activations = model(inputs)
+
+                similarity_map = -distances   # (B, N, K)
+                similarity = similarity_map
+
+                val_loss, _ = prototype_loss(
+                    model, outputs, labels, similarity, device, criterion,
+                    cfg
+                )
+
+                val_running_loss += val_loss.item()
+
+                _, predicted = torch.max(outputs, 1)
+                val_total += labels.size(0)
+                val_correct += (predicted == labels).sum().item()
+
+        val_epoch_loss = val_running_loss / len(val_loader)
+        val_epoch_acc = val_correct / val_total
+
+        print(f'Val Loss: {val_epoch_loss:.4f}, Val Acc: {val_epoch_acc*100:.2f}%')
 
     # Phase 2: Unfreeze backbone
     for param in model.parameters():
